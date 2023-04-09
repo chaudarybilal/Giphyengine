@@ -1,10 +1,10 @@
 import React from "react";
 import GiphySearch from "./GiphySearch";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <>
-      <GiphySearch />
+      <GiphySearch {...props} />
     </>
   );
 };

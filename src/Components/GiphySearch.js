@@ -1,12 +1,9 @@
 import { FaCheckSquare } from "react-icons/fa";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./GiphySearch.css";
 import Button from "react-bootstrap/Button";
-import { appContext } from "../App";
 
-const GiphySeacrh = () => {
-  const { favt, setFavt } = useContext(appContext);
-
+const GiphySeacrh = (props) => {
   const getLocalItem = () => {
     let list = localStorage.getItem("lists");
     if (list) {
@@ -66,12 +63,12 @@ const GiphySeacrh = () => {
   console.log("gifsdata", gifs);
 
   const addToFavt = (obj) => {
-    setFavt([...gifs, obj]);
+    props.setfavt([...props.favtdata, obj]);
   };
   const removeDataFromStorage = () => {
     try {
       localStorage.removeItem("lists");
-      setGifs([]);
+      props.setfavt([]);
     } catch (error) {
       console.log(error, "error");
     }
