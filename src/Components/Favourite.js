@@ -1,36 +1,31 @@
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./Favourite.css";
+import { appContext } from "../App";
+import { useContext } from "react";
 
-const Favourite = ({ favtdata, setfavt }) => {
+const Favourite = () => {
+  const { favt, setFavt } = useContext(appContext);
   const deleteitem = (gif) => {
-    setfavt(() => {
+    setFavt(() => {
       console.log("cliked");
       console.log(gif, "id");
-      return favtdata.filter((id) => {
+      return favt.filter((id) => {
         return gif !== id;
       });
     });
   };
   return (
     <>
-      <div className="container">
-        {favtdata.map((gif, index) => {
-          return (
-            <div key={index} gif={index}>
-              <img
-                width="100px"
-                height="100px"
-                src={gif.images.downsized?.url}
-                alt={gif.title}
-              />
-              <FaRegTrashAlt
-                className="delete"
-                onClick={() => deleteitem(gif)}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <h1>Express yourself with the perfect GIF, every time</h1>
+
+      {favt.map((gif, index) => {
+        return (
+          <div key={index} gif={index}>
+            <img src={gif.images.downsized?.url} alt={gif.title} />
+            <FaRegTrashAlt onClick={() => deleteitem(gif)} />
+          </div>
+        );
+      })}
     </>
   );
 };

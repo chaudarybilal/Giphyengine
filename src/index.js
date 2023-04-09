@@ -4,6 +4,12 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 
+/*
+react bootstrap configuration
+*/
+import "../node_modules/react-bootstrap/dist/react-bootstrap";
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

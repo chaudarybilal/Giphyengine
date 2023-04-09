@@ -4,23 +4,24 @@ import Home from "./Components/Home";
 import Favourite from "./Components/Favourite";
 import Login from "./Components/Login";
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext, createContext } from "react";
 
+const appContext = createContext();
 function App() {
-  const [favt, setfavt] = useState([]);
+  const [gifs, setGifs] = useState([]);
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home favtdata={favt} setfavt={setfavt} />} />
-        <Route
-          path="Favourite"
-          element={<Favourite favtdata={favt} setfavt={setfavt} />}
-        />
-        <Route path="Login" element={<Login />} />
-      </Routes>
+      <appContext.Provider value={{ gifs, setGifs }}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="Favourite" element={<Favourite />} />
+          <Route path="Login" element={<Login />} />
+        </Routes>
+      </appContext.Provider>
     </>
   );
 }
 
 export default App;
+export { appContext };

@@ -1,9 +1,12 @@
 import { FaCheckSquare } from "react-icons/fa";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./GiphySearch.css";
+import Button from "react-bootstrap/Button";
+import { appContext } from "../App";
 
-const MyContext = createContext();
-const GiphySearch = () => {
+const GiphySeacrh = () => {
+  const { favt, setFavt } = useContext(appContext);
+
   const getLocalItem = () => {
     let list = localStorage.getItem("lists");
     if (list) {
@@ -63,12 +66,12 @@ const GiphySearch = () => {
   console.log("gifsdata", gifs);
 
   const addToFavt = (obj) => {
-    setGifs([...gifs, obj]);
+    setFavt([...gifs, obj]);
   };
   const removeDataFromStorage = () => {
     try {
       localStorage.removeItem("lists");
-      gifs([]);
+      setGifs([]);
     } catch (error) {
       console.log(error, "error");
     }
@@ -76,43 +79,42 @@ const GiphySearch = () => {
 
   return (
     <>
-      <MyContext.Provider value={{ gifs, setGifs }}>
-        <div>
-          <input
-            type="text"
-            placeholder="Search hare"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="search-input"
-          />
+      <div>
+        <input
+          type="text"
+          placeholder="Search hare"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-input"
+        />
+        <Button variant="secondary" onClick={onClickhandler}>
+          Click Me
+        </Button>
+        <Button variant="danger" onClick={() => removeDataFromStorage()}>
+          Delete
+        </Button>
 
-          <button onClick={onClickhandler}>Click Me</button>
-
-          <button onClick={() => removeDataFromStorage()}>Delete</button>
-
-          <div className="container">
-            {gifs.map((gif, index) => {
-              return (
-                <div key={index} id={index} className="gif-item">
-                  <img
-                    width="100px"
-                    height="100px"
-                    src={gif.images.fixed_height.url}
-                    alt={gif.title}
-                  />
-                  <FaCheckSquare
-                    onClick={() => addToFavt(gif)}
-                    className="add-to-fav-icon"
-                  />
-                </div>
-              );
-            })}
-          </div>
+        <div className="container">
+          {gifs.map((gif, index) => {
+            return (
+              <div key={index} id={index} className="gif-item">
+                <img
+                  width="100px"
+                  height="100px"
+                  src={gif.images.fixed_height.url}
+                  alt={gif.title}
+                />
+                <FaCheckSquare
+                  onClick={() => addToFavt(gif)}
+                  className="add-to-fav-icon"
+                />
+              </div>
+            );
+          })}
         </div>
-      </MyContext.Provider>
+      </div>
     </>
   );
 };
 
-export default GiphySearch;
-export { MyContext };
+export default GiphySeacrh;
