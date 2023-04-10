@@ -1,12 +1,16 @@
+import { useContext } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./Favourite.css";
+import { GifContext } from "./GifProvider";
+import { Row, Col, Card } from "react-bootstrap";
 
-const Favourite = ({ favtdata, setfavt }) => {
+const Favourite = () => {
+  const { favt, setFavt } = useContext(GifContext);
   const deleteitem = (gif) => {
-    setfavt(() => {
+    setFavt(() => {
       console.log("cliked");
       console.log(gif, "id");
-      return favtdata.filter((id) => {
+      return favt.filter((id) => {
         return gif !== id;
       });
     });
@@ -14,24 +18,29 @@ const Favourite = ({ favtdata, setfavt }) => {
   return (
     <>
       <h1>favourite</h1>
-      <div className="container">
-        {favtdata.map((gif, index) => {
-          return (
-            <div key={index} gif={index}>
-              <img
+
+      <Row>
+        {favt.map((gif, index) => (
+          <Col key={index} id={index} sm={4} md={4} lg={3}>
+            <Card style={{ width: "15rem" }}>
+              <Card.Img
                 width="100px"
                 height="100px"
-                src={gif.images.downsized?.url}
-                alt={gif.title}
+                variant="top"
+                src={gif.images.preview_gif.url}
               />
-              <FaRegTrashAlt
-                className="delete"
-                onClick={() => deleteitem(gif)}
-              />
-            </div>
-          );
-        })}
-      </div>
+              <Card.Body>
+                <Card.Title>{gif.title}</Card.Title>
+                <Card.Text>{gif.overview}</Card.Text>
+                <FaRegTrashAlt
+                  className="delete"
+                  onClick={() => deleteitem(gif)}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
     </>
   );
 };

@@ -1,9 +1,15 @@
 import { FaCheckSquare } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./GiphySearch.css";
 import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import { GifContext } from "./GifProvider";
+import { Row, Col, Card } from "react-bootstrap";
 
-const GiphySeacrh = (props) => {
+const GiphySeacrh = () => {
+  const { favt, setFavt } = useContext(GifContext);
+  console.log(favt, setFavt);
   const getLocalItem = () => {
     let list = localStorage.getItem("lists");
     if (list) {
@@ -63,12 +69,12 @@ const GiphySeacrh = (props) => {
   console.log("gifsdata", gifs);
 
   const addToFavt = (obj) => {
-    props.setfavt([...props.favtdata, obj]);
+    setFavt([...favt, obj]);
   };
   const removeDataFromStorage = () => {
     try {
       localStorage.removeItem("lists");
-      props.setfavt([]);
+      setFavt([]);
     } catch (error) {
       console.log(error, "error");
     }
@@ -77,37 +83,52 @@ const GiphySeacrh = (props) => {
   return (
     <>
       <div>
-        <input
-          type="text"
-          placeholder="Search hare"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-input"
-        />
-        <Button variant="secondary" onClick={onClickhandler}>
-          Click Me
-        </Button>
-        <Button variant="danger" onClick={() => removeDataFromStorage()}>
-          Delete
-        </Button>
+        <div className="container">
+          <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Button variant="success" onClick={onClickhandler}>
+              Search
+            </Button>
+            <Button variant="danger" onClick={() => removeDataFromStorage()}>
+              Remove
+            </Button>
+          </Form>
+        </div>
 
         <div className="container">
-          {gifs.map((gif, index) => {
-            return (
-              <div key={index} id={index} className="gif-item">
-                <img
-                  width="100px"
-                  height="100px"
-                  src={gif.images.fixed_height.url}
-                  alt={gif.title}
-                />
-                <FaCheckSquare
-                  onClick={() => addToFavt(gif)}
-                  className="add-to-fav-icon"
-                />
-              </div>
-            );
-          })}
+          <Row
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {gifs.map((gif, index) => (
+              <Col key={index} id={index} sm={5} md={5} lg={3}>
+                <Card style={{ width: "15rem" }}>
+                  <Card.Img
+                    // width="100px"
+                    // height="100px"
+                    src={gif.images.preview_gif.url}
+                  />
+                  <Card.Body>
+                    <Card.Title>{gif.title}</Card.Title>
+
+                    <FaCheckSquare
+                      onClick={() => addToFavt(gif)}
+                      className="add-to-fav-icon"
+                    />
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </div>
       </div>
     </>
