@@ -72,3 +72,28 @@ body{
     }
   }
   
+.search-sec{
+  display: flex;
+ justify-content:center ;
+ flex-direction: column;
+padding: 20px;
+}
+  .search-box{
+    
+    display: flex;
+    justify-content: center;
+      
+  }
+  Form{
+    width: 700px;
+    
+    
+  
+  }
+
+ 
+
+  .btn{
+    
+    margin: 5px;
+  }

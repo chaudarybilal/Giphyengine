@@ -1,33 +1,22 @@
-import { FaCheckSquare } from "react-icons/fa";
 import { useState, useEffect, useContext } from "react";
 import "./GiphySearch.css";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { GifContext } from "./GifProvider";
 import { Row, Col, Card } from "react-bootstrap";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
-const GiphySeacrh = () => {
+const GiphySearch = () => {
   const { favt, setFavt } = useContext(GifContext);
-  console.log(favt, setFavt);
-  const getLocalItem = () => {
-    let list = localStorage.getItem("lists");
-    if (list) {
-      return JSON.parse(localStorage.getItem("lists"));
-    } else {
-      return [];
-    }
-  };
   const [search, setSearch] = useState("");
-
-  const [gifs, setGifs] = useState(getLocalItem());
-
+  const [gifs, setGifs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(100);
 
   const lmt = 10;
   const apikey = "G67CqXGOL4aPuxBdHv4P1d7PGXc4RTNy";
-  var search_url =
+  const search_url =
     "https://api.giphy.com/v1/gifs/search?q=" +
     search +
     "&key=" +
@@ -37,9 +26,7 @@ const GiphySeacrh = () => {
     "&offset=" +
     offset;
 
-  const onClickhandler = () => {
-    console.log("search_url", search_url);
-
+  const onClickHandler = () => {
     if (search.length > 0) {
       setLoading(true);
 
@@ -48,10 +35,7 @@ const GiphySeacrh = () => {
           setLoading(false);
           return response.json();
         })
-
         .then((res) => {
-          console.log("res", res);
-
           setGifs([...gifs, ...res.data]);
         })
         .catch((e) => {
@@ -60,47 +44,52 @@ const GiphySeacrh = () => {
         });
     }
   };
+
   useEffect(() => {
-    onClickhandler();
+    onClickHandler();
   }, [offset]);
-  useEffect(() => {
-    localStorage.setItem("lists", JSON.stringify(gifs));
-  }, [gifs]);
-  console.log("gifsdata", gifs);
 
   const addToFavt = (obj) => {
-    setFavt([...favt, obj]);
-  };
-  const removeDataFromStorage = () => {
-    try {
-      localStorage.removeItem("lists");
-      setFavt([]);
-    } catch (error) {
-      console.log(error, "error");
+    if (!favt.some((item) => item.id === obj.id)) {
+      setFavt([...favt, obj]);
     }
+  };
+
+  const removeFromFavt = (obj) => {
+    const updatedFavt = favt.filter((item) => item.id !== obj.id);
+    setFavt(updatedFavt);
+  };
+
+  const isGifSaved = (gif) => {
+    return favt.some((item) => item.id === gif.id);
   };
 
   return (
     <>
       <div>
-        <div className="container">
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Button variant="success" onClick={onClickhandler}>
+        <div
+          className="search-sec"
+          // style={{
+          //   backgroundImage: `url("https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=500")`,
+          // }}
+        >
+          <div className="search-box">
+            <Form id="form">
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                style={{ borderRadius: "8px", border: "1px solid black" }}
+                aria-label="Search"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </Form>
+          </div>
+          <div className="btn">
+            <Button variant="success" onClick={onClickHandler}>
               Search
             </Button>
-            <Button variant="danger" onClick={() => removeDataFromStorage()}>
-              Remove
-            </Button>
-          </Form>
+          </div>
         </div>
-
         <div className="container">
           <Row
             style={{
@@ -112,22 +101,25 @@ const GiphySeacrh = () => {
             {gifs.map((gif, index) => (
               <Col key={index} id={index} sm={5} md={5} lg={3}>
                 <Card style={{ width: "15rem" }}>
-                  <Card.Img
-                    // width="100px"
-                    // height="100px"
-                    src={gif.images.preview_gif.url}
-                  />
+                  <Card.Img src={gif.images.preview_gif.url} />
                   <Card.Body>
                     <Card.Title>{gif.title}</Card.Title>
-
-                    <FaCheckSquare
-                      onClick={() => addToFavt(gif)}
-                      className="add-to-fav-icon"
-                    />
+                    {!isGifSaved(gif) ? (
+                      <FavoriteBorderIcon
+                        className="add-to-fav-icon"
+                        onClick={() => addToFavt(gif)}
+                      />
+                    ) : (
+                      <FavoriteIcon
+                        className="add-to-fav-icon"
+                        onClick={() => removeFromFavt(gif)}
+                      />
+                    )}
                   </Card.Body>
                 </Card>
               </Col>
             ))}
+         
           </Row>
         </div>
       </div>
@@ -135,4 +127,4 @@ const GiphySeacrh = () => {
   );
 };
 
-export default GiphySeacrh;
+export default GiphySearch;

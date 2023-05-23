@@ -1,11 +1,15 @@
 import { useContext } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import "./Favourite.css";
 import { GifContext } from "./GifProvider";
 import { Row, Col, Card } from "react-bootstrap";
 
 const Favourite = () => {
+  // data get from context
   const { favt, setFavt } = useContext(GifContext);
+
+
+
+  // delete selected gif
   const deleteitem = (gif) => {
     setFavt(() => {
       console.log("cliked");
@@ -15,17 +19,20 @@ const Favourite = () => {
       });
     });
   };
+  
   return (
     <>
-      <h1>favourite</h1>
-
+    
+    
+      <h1  style={{display:"flex", justifyContent:"center"}}>Favourite</h1>
       <Row>
+      {/* map favourite gif  */}
         {favt.map((gif, index) => (
-          <Col key={index} id={index} sm={4} md={4} lg={3}>
-            <Card style={{ width: "15rem" }}>
+          <Col key={index} sm={6} md={4} lg={3}>
+            <Card style={{ width: '15rem' }}>
               <Card.Img
-                width="100px"
-                height="100px"
+                width="100%"
+                height="auto"
                 variant="top"
                 src={gif.images.preview_gif.url}
               />
@@ -44,5 +51,6 @@ const Favourite = () => {
     </>
   );
 };
+
 
 export default Favourite;

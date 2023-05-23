@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState,useEffect } from "react";
 
 export const GifContext = createContext({
   setFavt: () => console.log("provider is  missing"),
@@ -6,7 +6,20 @@ export const GifContext = createContext({
 });
 
 export const GifProvider = ({ children }) => {
-  const [favt, setFavt] = useState([]);
+ 
+  const getLocalItem = () => {
+    let list = localStorage.getItem("lists");
+    if (list) {
+      return JSON.parse(localStorage.getItem("lists"));
+    } else {
+      return [];
+    }
+  };
+  const [favt, setFavt] = useState(getLocalItem());
+  
+  useEffect(() => {
+    localStorage.setItem("lists", JSON.stringify(favt));
+  }, [favt]);
 
   return (
     <GifContext.Provider

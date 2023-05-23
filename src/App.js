@@ -6,10 +6,10 @@ import Login from "./Components/Login";
 
 import { Route, Routes } from "react-router-dom";
 import { GifProvider } from "./Components/GifProvider.js";
-import { GifContext } from "./Components/GifProvider.js";
-import { useContext } from "react";
+// import { GifContext } from "./Components/GifProvider.js";
+// import { useContext } from "react";
 function App() {
-  const { favt, setFavt } = useContext(GifContext);
+
   return (
     <GifProvider>
       <Header />
