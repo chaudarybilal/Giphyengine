@@ -6,6 +6,7 @@ import { GifContext } from "./GifProvider";
 import { Row, Col, Card } from "react-bootstrap";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { CircularProgress } from "@material-ui/core";
 
 const GiphySearch = () => {
   const { favt, setFavt } = useContext(GifContext);
@@ -65,29 +66,35 @@ const GiphySearch = () => {
   };
 
   return (
+
     <>
+     <div >
+      {loading ? (
+        <div style={{marginLeft:"650px" ,marginTop:"150px"}}>
+        <CircularProgress />
+        </div>
+      
+      ) : (
       <div>
+      <div className="sec1">
         <div
-          className="search-sec"
-          // style={{
-          //   backgroundImage: `url("https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=500")`,
-          // }}
-        >
-          <div className="search-box">
+          className="search-sec" >
+          <div >
             <Form id="form">
               <Form.Control
                 type="search"
                 placeholder="Search"
-                style={{ borderRadius: "8px", border: "1px solid black" }}
+                style={{ borderRadius: "8px", border: "1px solid black",padding:'7px' ,textAlign:"center" }}
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
             </Form>
           </div>
-          <div className="btn">
-            <Button variant="success" onClick={onClickHandler}>
+          <div className="sec2" >
+            <Button variant="success" style={{padding:"7px",backgroundColor:"black",width:"150px"}} onClick={onClickHandler}>
               Search
             </Button>
+          </div>
           </div>
         </div>
         <div className="container">
@@ -101,8 +108,8 @@ const GiphySearch = () => {
             {gifs.map((gif, index) => (
               <Col key={index} id={index} sm={5} md={5} lg={3}>
                 <Card style={{ width: "15rem" }}>
-                  <Card.Img src={gif.images.preview_gif.url} />
-                  <Card.Body>
+                  <Card.Img src={gif.images.preview_gif.url}   />
+                  <Card.Body >
                     <Card.Title>{gif.title}</Card.Title>
                     {!isGifSaved(gif) ? (
                       <FavoriteBorderIcon
@@ -123,6 +130,8 @@ const GiphySearch = () => {
           </Row>
         </div>
       </div>
+      )}
+    </div>
     </>
   );
 };

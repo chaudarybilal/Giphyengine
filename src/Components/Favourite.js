@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { GifContext } from "./GifProvider";
 import { Row, Col, Card } from "react-bootstrap";
+import { Box } from "@material-ui/core";
 
 const Favourite = () => {
   // data get from context
@@ -23,13 +24,13 @@ const Favourite = () => {
   return (
     <>
     
-    
-      <h1  style={{display:"flex", justifyContent:"center"}}>Favourite</h1>
-      <Row>
+    <Box component="div">
+      <h1  style={{display:"flex", justifyContent:"center" }}>Favorite Giphy Images</h1>
+      <Row style={{height:"80vh" ,width:"100%" ,marginLeft:"40px"}}>
       {/* map favourite gif  */}
         {favt.map((gif, index) => (
           <Col key={index} sm={6} md={4} lg={3}>
-            <Card style={{ width: '15rem' }}>
+            <Card style={{ width: '15rem',height:"15rem",marginTop:"50px" }}>
               <Card.Img
                 width="100%"
                 height="auto"
@@ -48,6 +49,7 @@ const Favourite = () => {
           </Col>
         ))}
       </Row>
+      </Box>
     </>
   );
 };

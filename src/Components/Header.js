@@ -7,10 +7,15 @@ import Typography from '@mui/material/Typography';
 
 const Header = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" style={{backgroundColor:"black"}}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Giphy Website
+        <Button color="inherit" component={Link} to="/">
+        <Typography style={{fontFamily:"sans-serif" ,fontSize:"1.5rem"}}>
+        Giphy
+        </Typography>
+        </Button>
+        
         </Typography>
         <Button color="inherit" component={Link} to="/">
           Home
