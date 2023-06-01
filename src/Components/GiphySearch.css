@@ -1,15 +1,16 @@
 *{
-  margin:0px;
-  padding: 0px;
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
 }
 body{
   background-color: #94bbe9;
 }
-.container {
+/* .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Creates a responsive grid with minimum width of 200px */
-    gap: 20px; /* Adds a 20px gap between each grid item */
-  }
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 20px; 
+  } */
   
   /* Style for the individual GIF item */
   .gif-item {
@@ -17,11 +18,11 @@ body{
   }
   
   /* Style for the image */
-  .gif-item img {
+  /* .gif-item img {
     width: 100%;
     height: auto;
     display: block;
-  }
+  } */
   
   /* Style for the add-to-favorites icon */
   .gif-item .add-to-fav-icon {
@@ -34,17 +35,15 @@ body{
   
   /* Style for the search input */
   .search-input{
-    color: #8707ff;
-    border: 2px solid #8707ff;
+   
+    
     border-radius: 10px;
     padding: 10px 25px;
     background: transparent;
     max-width: 190px;
    }
    
-   .search-input:active {
-    box-shadow: 2px 2px 15px #8707ff inset;
-   }
+
   
   /* Style for the buttons */
   button {
@@ -88,6 +87,7 @@ body{
    
   }
   
+
 .search-sec{
 
   display: flex;
@@ -122,3 +122,33 @@ body{
  
   }
  
+  .card-img{
+    /* border: 2px solid red; */
+    height: 200px ;
+    width: 200px;
+   
+  }
+
+  .main-card{
+    width: 200px;
+    height: 300px !important;
+    margin-Top: 30px !important;
+    padding: 0 !important;
+    margin-bottom: 30px !important;
+    /* border: 2px solid blue !important; */
+  }
+
+  .rowc{
+    
+    padding: 0 !important;
+    margin: 0 !important;
+    
+
+   
+  }
+
+
+  .card-title{
+    font-size: 12px !important;
+    
+  }

@@ -5,9 +5,11 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+
+
 const Header = () => {
-  return (
-    <AppBar position="static" style={{backgroundColor:"black"}}>
+  return (<>
+  <AppBar position="static" style={{backgroundColor:"black"}}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
         <Button color="inherit" component={Link} to="/">
@@ -27,7 +29,11 @@ const Header = () => {
           Login
         </Button>
       </Toolbar>
+    
     </AppBar>
+  
+  </>
+  
   );
 };
 

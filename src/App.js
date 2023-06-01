@@ -6,19 +6,26 @@ import Login from "./Components/Login";
 
 import { Route, Routes } from "react-router-dom";
 import { GifProvider } from "./Components/GifProvider.js";
-// import { GifContext } from "./Components/GifProvider.js";
-// import { useContext } from "react";
+import Footer from "./Components/Footer";
+
 function App() {
 
   return (
-    <GifProvider>
+    <>
+        <GifProvider>
       <Header />
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="Favourite" element={<Favourite />} />
         <Route path="Login" element={<Login />} />
+        
       </Routes>
+      <Footer/>
     </GifProvider>
+    </>
+  
+    
   );
 }
 

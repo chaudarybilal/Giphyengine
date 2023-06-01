@@ -66,73 +66,82 @@ const GiphySearch = () => {
   };
 
   return (
-
-    <>
-     <div >
-      {loading ? (
-        <div style={{marginLeft:"650px" ,marginTop:"150px"}}>
-        <CircularProgress />
-        </div>
-      
-      ) : (
+    <div style={{ minHeight: "77.2vh" }}>
       <div>
-      <div className="sec1">
-        <div
-          className="search-sec" >
-          <div >
-            <Form id="form">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                style={{ borderRadius: "8px", border: "1px solid black",padding:'7px' ,textAlign:"center" }}
-                aria-label="Search"
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </Form>
+        {loading ? (
+          <div style={{ marginLeft: "650px", marginTop: "150px" }}>
+            <CircularProgress />
           </div>
-          <div className="sec2" >
-            <Button variant="success" style={{padding:"7px",backgroundColor:"black",width:"150px"}} onClick={onClickHandler}>
-              Search
-            </Button>
-          </div>
-          </div>
-        </div>
-        <div className="container">
-          <Row
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            {gifs.map((gif, index) => (
-              <Col key={index} id={index} sm={5} md={5} lg={3}>
-                <Card style={{ width: "15rem" }}>
-                  <Card.Img src={gif.images.preview_gif.url}   />
-                  <Card.Body >
-                    <Card.Title>{gif.title}</Card.Title>
-                    {!isGifSaved(gif) ? (
-                      <FavoriteBorderIcon
-                        className="add-to-fav-icon"
-                        onClick={() => addToFavt(gif)}
+        ) : (
+          <div>
+            <div className="sec1">
+              <div className="search-sec">
+                <div>
+                  <Form id="form">
+                    <Form.Control
+                      type="search"
+                      placeholder="Search"
+                      style={{
+                        borderRadius: "8px",
+                        border: "1px solid black",
+                        padding: "7px",
+                        textAlign: "center",
+                      }}
+                      aria-label="Search"
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </Form>
+                </div>
+                <div className="sec2">
+                  <Button
+                    variant="success"
+                    style={{
+                      padding: "7px",
+                      backgroundColor: "black",
+                      width: "150px",
+                    }}
+                    onClick={onClickHandler}
+                  >
+                    Search
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div>
+              {/* {card} */}
+              <Row className="rowc">
+                {gifs.map((gif, index) => (
+                  <Col key={index} id={index} sm={5} md={5} lg={2}>
+                    <Card className="main-card">
+                      <Card.Img
+                        className="card-img"
+                        src={gif.images.preview_gif.url}
                       />
-                    ) : (
-                      <FavoriteIcon
-                        className="add-to-fav-icon"
-                        onClick={() => removeFromFavt(gif)}
-                      />
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-         
-          </Row>
-        </div>
+                      <Card.Body>
+                        <Card.Title className="card-title">
+                          {gif.title}
+                        </Card.Title>
+                        {!isGifSaved(gif) ? (
+                          <FavoriteBorderIcon
+                            className="add-to-fav-icon "
+                            onClick={() => addToFavt(gif)}
+                          />
+                        ) : (
+                          <FavoriteIcon
+                            className="add-to-fav-icon"
+                            onClick={() => removeFromFavt(gif)}
+                          />
+                        )}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </div>
+        )}
       </div>
-      )}
     </div>
-    </>
   );
 };
 
