@@ -39,7 +39,7 @@ const ContactUs = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Example textarea</Form.Label>
+            <Form.Label>Write Message</Form.Label>
             <Form.Control as="textarea" rows={3} name="message" required />
           </Form.Group>
           <Button variant="primary" type="submit">
